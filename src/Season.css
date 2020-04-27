@@ -1,0 +1,24 @@
+i.right {
+	position: absolute;
+	right: 10%;
+	bottom: 10%;
+}
+
+i.left {
+	position: absolute;
+	left: 10%;
+	top: 10%;
+}
+
+.season {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	height: 100vh;
+}
+.warm {
+	background-color: #efd5a3;
+}
+.cool {
+	background-color: aliceblue;
+}

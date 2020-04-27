@@ -1,17 +1,28 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import * as serviceWorker from './serviceWorker';
+import Loader from './Loader';
+import Season from './Season';
 
-ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-  document.getElementById('root')
-);
+class App extends React.Component {
+	state = { lat: null, error: '' };
 
-// If you want your app to work offline and load faster, you can change
-// unregister() to register() below. Note this comes with some pitfalls.
-// Learn more about service workers: https://bit.ly/CRA-PWA
-serviceWorker.unregister();
+	componentDidMount() {
+		window.navigator.geolocation.getCurrentPosition(
+			(position) => this.setState({ lat: position.coords.latitude }),
+			(error) => this.setState({ error: error.message })
+		);
+	}
+
+	renderContent() {
+		if (!this.state.long && this.state.error) return <h3>Error:{this.state.error} </h3>;
+
+		if (this.state.lat && !this.state.error) return <Season lat={this.state.lat} />;
+
+		return <Loader message="Detecting your location. You may need to grant permission..." />;
+	}
+	render() {
+		return <div className="parent">{this.renderContent()}</div>;
+	}
+}
+
+ReactDOM.render(<App />, document.getElementById('root'));
